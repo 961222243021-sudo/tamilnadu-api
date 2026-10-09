@@ -13,7 +13,7 @@ const server = http.createServer(async (req,res) => {
       return;
     }
     const path = ['/', '/docs', '/docs/'].includes(url.pathname) ? 'index.html' : url.pathname === '/guide' ? 'guide.html' : url.pathname.slice(1);
-    if (!['index.html','app.js','style.css','openapi.json','coverage.json','guide.html','assets/leaders.webp','assets/leaders-hero.webp'].includes(path)) { res.writeHead(404);res.end('Not found');return; }
+    if (!['index.html','app.js','style.css','openapi.json','coverage.json','guide.html','assets/leaders-collage-v2.webp','assets/leaders-hero.webp'].includes(path)) { res.writeHead(404);res.end('Not found');return; }
     const bytes = await readFile(new URL(path,publicRoot));
     const types = {html:'text/html',js:'application/javascript',css:'text/css',json:'application/json',webp:'image/webp'};
     res.writeHead(200,{'Content-Type':types[path.split('.').pop()]+'; charset=utf-8'});res.end(bytes);
