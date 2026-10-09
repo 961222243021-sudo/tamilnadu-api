@@ -89,6 +89,7 @@ async function showResults() {
     }
     $('results').replaceChildren(rows);
     $('json-link').href = `${apiBase}/results?year=${year}&constituency_id=${seat}`;
+    $('json-link').textContent = 'Open this result as JSON ↗';
     $('csv-link').href = `${apiBase}/elections/${year}/export.csv`;
     $('seat-csv-link').href = `${apiBase}/elections/${year}/export.csv?constituency_id=${seat}`;
     for (const id of ['json-link', 'csv-link', 'seat-csv-link', 'copy-result']) $(id).hidden = false;
@@ -121,7 +122,7 @@ $('copy-base').addEventListener('click', async () => {
 });
 $('copy-result').addEventListener('click', async () => {
   try { await copyWithTimeout($('json-link').href); $('copy-result').textContent = 'Copied!'; }
-  catch { const url = $('json-link'); const selection = window.getSelection(); const range = document.createRange(); range.selectNodeContents(url); selection.removeAllRanges(); selection.addRange(range); $('copy-result').textContent = 'Link selected — copy with Ctrl/Cmd+C'; }
+  catch { const url = $('json-link'); url.textContent = url.href; url.style.overflowWrap = 'anywhere'; const selection = window.getSelection(); const range = document.createRange(); range.selectNodeContents(url); selection.removeAllRanges(); selection.addRange(range); $('copy-result').textContent = 'Link selected — copy with Ctrl/Cmd+C'; }
   setTimeout(() => { $('copy-result').textContent = 'Copy result URL'; }, 2000);
 });
 init();
