@@ -3,6 +3,15 @@ const apiBase = `${location.origin}/api/v1`;
 $('base-url').textContent = apiBase;
 let controller, requestId = 0, seats = [], yearsReady = false, retryAction;
 const option = (text, value) => { const o = document.createElement('option'); o.textContent = text; o.value = value; return o; };
+async function copyWithTimeout(text) {
+  let timer;
+  try {
+    await Promise.race([
+      navigator.clipboard.writeText(text),
+      new Promise((_, reject) => { timer = setTimeout(() => reject(new Error('Clipboard unavailable')), 1500); }),
+    ]);
+  } finally { clearTimeout(timer); }
+}
 const format = value => Number.isFinite(value) ? value.toLocaleString('en-IN') : 'Under review';
 function start(message) {
   controller?.abort(); controller = new AbortController();
@@ -106,13 +115,13 @@ $('seat-search').addEventListener('input', () => {
 });
 $('retry').addEventListener('click', () => retryAction?.());
 $('copy-base').addEventListener('click', async () => {
-  try { await navigator.clipboard.writeText(apiBase); $('copy-base').textContent = 'Copied!'; }
+  try { await copyWithTimeout(apiBase); $('copy-base').textContent = 'Copied!'; }
   catch { const selection = window.getSelection(); const range = document.createRange(); range.selectNodeContents($('base-url')); selection.removeAllRanges(); selection.addRange(range); $('copy-base').textContent = 'URL selected'; }
   setTimeout(() => { $('copy-base').textContent = 'Copy'; }, 2000);
 });
 $('copy-result').addEventListener('click', async () => {
-  try { await navigator.clipboard.writeText($('json-link').href); $('copy-result').textContent = 'Copied!'; }
-  catch { $('copy-result').textContent = 'Use the JSON link to copy'; }
+  try { await copyWithTimeout($('json-link').href); $('copy-result').textContent = 'Copied!'; }
+  catch { const url = $('json-link'); const selection = window.getSelection(); const range = document.createRange(); range.selectNodeContents(url); selection.removeAllRanges(); selection.addRange(range); $('copy-result').textContent = 'Link selected — copy with Ctrl/Cmd+C'; }
   setTimeout(() => { $('copy-result').textContent = 'Copy result URL'; }, 2000);
 });
 init();
