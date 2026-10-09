@@ -1,0 +1,9 @@
+data/raw/
+data/results.csv
+tests/
+scripts/prepare_data.py
+scripts/collect_sources.py
+scripts/package.py
+README.md
+API_PLAN.md
+DATA_AUDIT.md

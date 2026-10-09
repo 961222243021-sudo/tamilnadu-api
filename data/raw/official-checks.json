@@ -1,0 +1,29 @@
+{
+  "checked_at": "2026-10-09",
+  "scope": "limited_external_checks_only",
+  "candidate_count": {
+    "year": 2026,
+    "value": 4023,
+    "official_url": "https://affidavit.eci.gov.in/CandidateCustomFilter?election=32-AC-GENERAL-3-60&electionType=32-AC-GENERAL-3-60&page=11&states=S22"
+  },
+  "sample": {
+    "year": 2026,
+    "constituency_id": 1,
+    "official_url": "https://www.eci.gov.in/eci-backend/public/all_files/election_report/General_Election_to_the_Legislative_Assembly_of_Tamil_Nadu_2026_2026/10-Detailed_Results_1778165153.pdf",
+    "candidate_votes": [
+      {
+        "name": "S.vijayakumar",
+        "votes": 94320
+      },
+      {
+        "name": "Sudhakar.v",
+        "votes": 66375
+      },
+      {
+        "name": "T.j.govindarajan",
+        "votes": 62492
+      }
+    ]
+  },
+  "full_official_row_audit": false
+}

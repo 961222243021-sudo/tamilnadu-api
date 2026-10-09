@@ -1,0 +1,493 @@
+{
+  "dataset_version": "2026-10-09.1",
+  "state": "Tamil Nadu",
+  "scope": "Assembly general-election cycles, 1967–2026",
+  "all_officially_verified": false,
+  "release_status": "provisional",
+  "total_result_rows": 36039,
+  "total_candidate_rows": 35337,
+  "elections": [
+    {
+      "year": 1967,
+      "election_id": "tn-assembly-1967",
+      "type": "assembly_general",
+      "expected_constituencies": 234,
+      "constituencies_present": 234,
+      "missing_constituency_ids": [],
+      "result_rows": 778,
+      "candidate_rows": 778,
+      "nota_rows": 0,
+      "winner_rows": 234,
+      "constituency_coverage": "all_234_present",
+      "official_verification": "pending",
+      "candidate_completeness": "not_officially_certified",
+      "quality_issue_constituencies": 2,
+      "issues": [
+        {
+          "constituency_id": 44,
+          "constituency_name": "Peranamallur",
+          "flags": [
+            "inconsistent_reported_total",
+            "vote_sum_mismatch"
+          ],
+          "computed_vote_sum": 63601,
+          "source_reported_totals": [
+            62832,
+            66728
+          ]
+        },
+        {
+          "constituency_id": 152,
+          "constituency_name": "Perambalur",
+          "flags": [
+            "vote_sum_mismatch"
+          ],
+          "computed_vote_sum": 65959,
+          "source_reported_totals": [
+            66728
+          ]
+        }
+      ],
+      "source_ids": [
+        "historical-archive"
+      ],
+      "notes": [
+        "General-election cycle results; not a complete by-election archive.",
+        "Constituency IDs are scoped to election year. Do not equate pre-2011 IDs with post-2011 boundaries."
+      ]
+    },
+    {
+      "year": 1971,
+      "election_id": "tn-assembly-1971",
+      "type": "assembly_general",
+      "expected_constituencies": 234,
+      "constituencies_present": 234,
+      "missing_constituency_ids": [],
+      "result_rows": 748,
+      "candidate_rows": 748,
+      "nota_rows": 0,
+      "winner_rows": 234,
+      "constituency_coverage": "all_234_present",
+      "official_verification": "pending",
+      "candidate_completeness": "not_officially_certified",
+      "quality_issue_constituencies": 0,
+      "issues": [],
+      "source_ids": [
+        "historical-archive"
+      ],
+      "notes": [
+        "General-election cycle results; not a complete by-election archive.",
+        "Constituency IDs are scoped to election year. Do not equate pre-2011 IDs with post-2011 boundaries."
+      ]
+    },
+    {
+      "year": 1977,
+      "election_id": "tn-assembly-1977",
+      "type": "assembly_general",
+      "expected_constituencies": 234,
+      "constituencies_present": 234,
+      "missing_constituency_ids": [],
+      "result_rows": 1390,
+      "candidate_rows": 1390,
+      "nota_rows": 0,
+      "winner_rows": 234,
+      "constituency_coverage": "all_234_present",
+      "official_verification": "pending",
+      "candidate_completeness": "not_officially_certified",
+      "quality_issue_constituencies": 0,
+      "issues": [],
+      "source_ids": [
+        "historical-archive"
+      ],
+      "notes": [
+        "General-election cycle results; not a complete by-election archive.",
+        "Constituency IDs are scoped to election year. Do not equate pre-2011 IDs with post-2011 boundaries."
+      ]
+    },
+    {
+      "year": 1980,
+      "election_id": "tn-assembly-1980",
+      "type": "assembly_general",
+      "expected_constituencies": 234,
+      "constituencies_present": 234,
+      "missing_constituency_ids": [],
+      "result_rows": 1029,
+      "candidate_rows": 1029,
+      "nota_rows": 0,
+      "winner_rows": 234,
+      "constituency_coverage": "all_234_present",
+      "official_verification": "pending",
+      "candidate_completeness": "not_officially_certified",
+      "quality_issue_constituencies": 0,
+      "issues": [],
+      "source_ids": [
+        "historical-archive"
+      ],
+      "notes": [
+        "General-election cycle results; not a complete by-election archive.",
+        "Constituency IDs are scoped to election year. Do not equate pre-2011 IDs with post-2011 boundaries."
+      ]
+    },
+    {
+      "year": 1984,
+      "election_id": "tn-assembly-1984",
+      "type": "assembly_general",
+      "expected_constituencies": 234,
+      "constituencies_present": 234,
+      "missing_constituency_ids": [],
+      "result_rows": 1499,
+      "candidate_rows": 1499,
+      "nota_rows": 0,
+      "winner_rows": 234,
+      "constituency_coverage": "all_234_present",
+      "official_verification": "pending",
+      "candidate_completeness": "not_officially_certified",
+      "quality_issue_constituencies": 0,
+      "issues": [],
+      "source_ids": [
+        "historical-archive"
+      ],
+      "notes": [
+        "General-election cycle results; not a complete by-election archive.",
+        "Constituency IDs are scoped to election year. Do not equate pre-2011 IDs with post-2011 boundaries."
+      ]
+    },
+    {
+      "year": 1989,
+      "election_id": "tn-assembly-1989",
+      "type": "assembly_general",
+      "expected_constituencies": 234,
+      "constituencies_present": 234,
+      "missing_constituency_ids": [],
+      "result_rows": 3046,
+      "candidate_rows": 3046,
+      "nota_rows": 0,
+      "winner_rows": 234,
+      "constituency_coverage": "all_234_present",
+      "official_verification": "pending",
+      "candidate_completeness": "not_officially_certified",
+      "quality_issue_constituencies": 0,
+      "issues": [],
+      "source_ids": [
+        "historical-archive"
+      ],
+      "notes": [
+        "General-election cycle results; not a complete by-election archive.",
+        "Constituency IDs are scoped to election year. Do not equate pre-2011 IDs with post-2011 boundaries."
+      ]
+    },
+    {
+      "year": 1991,
+      "election_id": "tn-assembly-1991",
+      "type": "assembly_general",
+      "expected_constituencies": 234,
+      "constituencies_present": 234,
+      "missing_constituency_ids": [],
+      "result_rows": 2834,
+      "candidate_rows": 2834,
+      "nota_rows": 0,
+      "winner_rows": 234,
+      "constituency_coverage": "all_234_present",
+      "official_verification": "pending",
+      "candidate_completeness": "not_officially_certified",
+      "quality_issue_constituencies": 2,
+      "issues": [
+        {
+          "constituency_id": 31,
+          "constituency_name": "Pallipet",
+          "flags": [
+            "zero_vote_rows_require_review"
+          ],
+          "computed_vote_sum": 96565,
+          "source_reported_totals": [
+            96565
+          ]
+        },
+        {
+          "constituency_id": 151,
+          "constituency_name": "Aravakurichi",
+          "flags": [
+            "zero_vote_rows_require_review"
+          ],
+          "computed_vote_sum": 104232,
+          "source_reported_totals": [
+            104232
+          ]
+        }
+      ],
+      "source_ids": [
+        "historical-archive"
+      ],
+      "notes": [
+        "General-election cycle results; not a complete by-election archive.",
+        "Constituency IDs are scoped to election year. Do not equate pre-2011 IDs with post-2011 boundaries."
+      ]
+    },
+    {
+      "year": 1996,
+      "election_id": "tn-assembly-1996",
+      "type": "assembly_general",
+      "expected_constituencies": 234,
+      "constituencies_present": 234,
+      "missing_constituency_ids": [],
+      "result_rows": 5017,
+      "candidate_rows": 5017,
+      "nota_rows": 0,
+      "winner_rows": 234,
+      "constituency_coverage": "all_234_present",
+      "official_verification": "pending",
+      "candidate_completeness": "not_officially_certified",
+      "quality_issue_constituencies": 1,
+      "issues": [
+        {
+          "constituency_id": 118,
+          "constituency_name": "Modakkurichi",
+          "flags": [
+            "zero_vote_rows_require_review"
+          ],
+          "computed_vote_sum": 117215,
+          "source_reported_totals": [
+            117215
+          ]
+        }
+      ],
+      "source_ids": [
+        "historical-archive"
+      ],
+      "notes": [
+        "General-election cycle results; not a complete by-election archive.",
+        "Constituency IDs are scoped to election year. Do not equate pre-2011 IDs with post-2011 boundaries."
+      ]
+    },
+    {
+      "year": 2001,
+      "election_id": "tn-assembly-2001",
+      "type": "assembly_general",
+      "expected_constituencies": 234,
+      "constituencies_present": 234,
+      "missing_constituency_ids": [],
+      "result_rows": 1860,
+      "candidate_rows": 1860,
+      "nota_rows": 0,
+      "winner_rows": 234,
+      "constituency_coverage": "all_234_present",
+      "official_verification": "pending",
+      "candidate_completeness": "not_officially_certified",
+      "quality_issue_constituencies": 0,
+      "issues": [],
+      "source_ids": [
+        "historical-archive"
+      ],
+      "notes": [
+        "General-election cycle results; not a complete by-election archive.",
+        "Constituency IDs are scoped to election year. Do not equate pre-2011 IDs with post-2011 boundaries."
+      ]
+    },
+    {
+      "year": 2006,
+      "election_id": "tn-assembly-2006",
+      "type": "assembly_general",
+      "expected_constituencies": 234,
+      "constituencies_present": 234,
+      "missing_constituency_ids": [],
+      "result_rows": 2586,
+      "candidate_rows": 2586,
+      "nota_rows": 0,
+      "winner_rows": 234,
+      "constituency_coverage": "all_234_present",
+      "official_verification": "pending",
+      "candidate_completeness": "not_officially_certified",
+      "quality_issue_constituencies": 0,
+      "issues": [],
+      "source_ids": [
+        "historical-archive"
+      ],
+      "notes": [
+        "General-election cycle results; not a complete by-election archive.",
+        "Constituency IDs are scoped to election year. Do not equate pre-2011 IDs with post-2011 boundaries."
+      ]
+    },
+    {
+      "year": 2011,
+      "election_id": "tn-assembly-2011",
+      "type": "assembly_general",
+      "expected_constituencies": 234,
+      "constituencies_present": 234,
+      "missing_constituency_ids": [],
+      "result_rows": 2748,
+      "candidate_rows": 2748,
+      "nota_rows": 0,
+      "winner_rows": 234,
+      "constituency_coverage": "all_234_present",
+      "official_verification": "pending",
+      "candidate_completeness": "not_officially_certified",
+      "quality_issue_constituencies": 0,
+      "issues": [],
+      "source_ids": [
+        "historical-archive"
+      ],
+      "notes": [
+        "General-election cycle results; not a complete by-election archive.",
+        "Constituency IDs are scoped to election year. Do not equate pre-2011 IDs with post-2011 boundaries."
+      ]
+    },
+    {
+      "year": 2016,
+      "election_id": "tn-assembly-2016",
+      "type": "assembly_general",
+      "expected_constituencies": 234,
+      "constituencies_present": 234,
+      "missing_constituency_ids": [],
+      "result_rows": 4015,
+      "candidate_rows": 3781,
+      "nota_rows": 234,
+      "winner_rows": 234,
+      "constituency_coverage": "all_234_present",
+      "official_verification": "pending",
+      "candidate_completeness": "not_officially_certified",
+      "quality_issue_constituencies": 2,
+      "issues": [
+        {
+          "constituency_id": 134,
+          "constituency_name": "Aravakurichi",
+          "flags": [
+            "inconsistent_reported_total"
+          ],
+          "computed_vote_sum": 164582,
+          "source_reported_totals": [
+            164582,
+            164583,
+            164584,
+            164585,
+            164586,
+            164587,
+            164588,
+            164589,
+            164590,
+            164591,
+            164592,
+            164593,
+            164594,
+            164595,
+            164596,
+            164597,
+            164598,
+            164599,
+            164600,
+            164601,
+            164602,
+            164603,
+            164604,
+            164605,
+            164606,
+            164607,
+            164608,
+            164609,
+            164610,
+            164611,
+            164612,
+            164613,
+            164614,
+            164615,
+            164616,
+            164617,
+            164618,
+            164619,
+            164620,
+            164621
+          ]
+        },
+        {
+          "constituency_id": 174,
+          "constituency_name": "Thanjavur",
+          "flags": [
+            "inconsistent_reported_total"
+          ],
+          "computed_vote_sum": 186444,
+          "source_reported_totals": [
+            186444,
+            186445,
+            186446,
+            186447,
+            186448,
+            186449,
+            186450,
+            186451,
+            186452,
+            186453,
+            186454,
+            186455,
+            186456,
+            186457,
+            186458
+          ]
+        }
+      ],
+      "source_ids": [
+        "historical-archive"
+      ],
+      "notes": [
+        "General-election cycle results; not a complete by-election archive.",
+        "Constituency IDs are scoped to election year. Do not equate pre-2011 IDs with post-2011 boundaries.",
+        "Includes archive records for delayed 2016 polls; denominator inconsistencies remain flagged."
+      ]
+    },
+    {
+      "year": 2021,
+      "election_id": "tn-assembly-2021",
+      "type": "assembly_general",
+      "expected_constituencies": 234,
+      "constituencies_present": 234,
+      "missing_constituency_ids": [],
+      "result_rows": 4232,
+      "candidate_rows": 3998,
+      "nota_rows": 234,
+      "winner_rows": 234,
+      "constituency_coverage": "all_234_present",
+      "official_verification": "pending",
+      "candidate_completeness": "not_officially_certified",
+      "quality_issue_constituencies": 0,
+      "issues": [],
+      "source_ids": [
+        "opencity-2021"
+      ],
+      "notes": [
+        "General-election cycle results; not a complete by-election archive.",
+        "Constituency IDs are scoped to election year. Do not equate pre-2011 IDs with post-2011 boundaries."
+      ]
+    },
+    {
+      "year": 2026,
+      "election_id": "tn-assembly-2026",
+      "type": "assembly_general",
+      "expected_constituencies": 234,
+      "constituencies_present": 234,
+      "missing_constituency_ids": [],
+      "result_rows": 4257,
+      "candidate_rows": 4023,
+      "nota_rows": 234,
+      "winner_rows": 234,
+      "constituency_coverage": "all_234_present",
+      "official_verification": "pending",
+      "candidate_completeness": "not_officially_certified",
+      "quality_issue_constituencies": 0,
+      "issues": [],
+      "source_ids": [
+        "2026-archive"
+      ],
+      "notes": [
+        "General-election cycle results; not a complete by-election archive.",
+        "Constituency IDs are scoped to election year. Do not equate pre-2011 IDs with post-2011 boundaries."
+      ]
+    }
+  ],
+  "limitations": [
+    "All 234 constituency IDs are present for each target year, but this does not certify all candidate rows.",
+    "Official ECI downloads returned HTTP 406/502 during collection; no complete official row audit was possible.",
+    "2026 is a results-page archive, not a certified Form-20 dataset.",
+    "Historical party labels and name spellings follow source copies; parties and people are not merged across years.",
+    "Tamil candidate/constituency names, district filters, turnout, affidavits, local-body and parliamentary elections are not part of this release.",
+    "Zero-vote rows and inconsistent reported totals are retained and flagged.",
+    "Secondary-copy agreement for 2021 and an official 2026 candidate-count check do not establish row-level official verification."
+  ]
+}

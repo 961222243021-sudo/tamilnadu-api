@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Tamilnadu API · Election data</title><meta name="description" content="Search Tamil Nadu Assembly election archives from 1967 to 2026. Candidate votes, winners, party results, and transparent coverage."><link rel="stylesheet" href="/style.css"><script src="/app.js" defer></script></head>
+<body>
+<header><a class="brand" href="/">தமிழ்நாடு <span>API</span></a><nav><a href="#explore">Explore</a><a href="#endpoints">Endpoints</a><a href="/api/v1/coverage">Coverage ↗</a></nav></header>
+<main>
+<section class="hero"><p class="eyebrow">ELECTION ARCHIVE · API V1</p><h1>Tamil Nadu’s elections.<br><span>One place to explore.</span></h1><p class="intro">Candidate votes, constituency results, and party performance across 14 Assembly election cycles.</p><div class="stats"><div><strong>1967–2026</strong><span>Election years</span></div><div><strong>234</strong><span>Constituencies per year</span></div><div><strong>36,039</strong><span>Collected result rows</span></div></div></section>
+<aside class="notice"><strong>Provisional archive</strong><p>All target years and constituency IDs are present. Complete official candidate verification is pending. Source inconsistencies are flagged in results. <a href="/api/v1/coverage">Read the audit →</a></p></aside>
+<section id="explore"><div class="section-head"><div><p class="eyebrow">TRY THE DATA</p><h2>Explore a constituency</h2></div><a id="csv-link" href="/api/v1/elections/2026/export.csv">Download year CSV ↓</a></div>
+<form id="explorer"><label>Election year<select id="year" name="year"></select></label><label>Constituency<select id="constituency" name="constituency"></select></label><button type="submit">Show results →</button></form>
+<p id="status" role="status" aria-live="polite">Loading the archive…</p>
+<div id="summary" class="summary" hidden></div>
+<div class="table-wrap"><table><thead><tr><th>Rank</th><th>Candidate</th><th>Party</th><th>Votes</th><th>Vote share</th><th>Result</th></tr></thead><tbody id="results"></tbody></table></div>
+<a id="json-link" class="small-link" href="/api/v1">Open this result as JSON ↗</a>
+</section>
+<section id="endpoints"><p class="eyebrow">FOR DEVELOPERS</p><h2>Build with the archive</h2><p>Public GET endpoints. No API key. Responses include source references and verification status.</p><div class="base"><span>YOUR API BASE</span><code id="base-url"></code><button id="copy-base" type="button">Copy</button></div>
+<div class="table-wrap"><table class="endpoint-table"><thead><tr><th>Endpoint</th><th>Returns</th></tr></thead><tbody>
+<tr><td><a href="/api/v1/elections">/elections</a></td><td>Election years and coverage</td></tr>
+<tr><td><a href="/api/v1/elections/2026">/elections/2026</a></td><td>Election overview and party totals</td></tr>
+<tr><td><a href="/api/v1/elections/2026/constituencies?limit=500">/elections/2026/constituencies</a></td><td>234 constituency summaries</td></tr>
+<tr><td><a href="/api/v1/elections/2026/constituencies/1/results">/elections/2026/constituencies/1/results</a></td><td>Every collected candidate and NOTA row for the seat</td></tr>
+<tr><td><a href="/api/v1/elections/2026/winners">/elections/2026/winners</a></td><td>Winning candidates</td></tr>
+<tr><td><a href="/api/v1/elections/2026/losers">/elections/2026/losers</a></td><td>Other contesting candidates</td></tr>
+<tr><td><a href="/api/v1/elections/2026/parties">/elections/2026/parties</a></td><td>Party votes and seats</td></tr>
+<tr><td><a href="/api/v1/candidates?year=2021&q=stalin">/candidates?year=2021&amp;q=stalin</a></td><td>Candidate-result search</td></tr>
+<tr><td><a href="/api/v1/compare?from=2021&to=2026&constituency_id=1">/compare?from=2021&amp;to=2026&amp;constituency_id=1</a></td><td>Constituency comparison, 2011 onward</td></tr>
+<tr><td><a href="/api/v1/elections/2026/export.csv">/elections/2026/export.csv</a></td><td>Full-year CSV export</td></tr>
+<tr><td><a href="/api/v1/sources">/sources</a> · <a href="/api/v1/coverage">/coverage</a></td><td>Provenance and unresolved issues</td></tr>
+</tbody></table></div>
+<p>List responses support <code>page=1&amp;limit=50</code> (maximum 500). Result lists also support <code>q</code>, <code>party</code>, <code>status</code>, and <code>constituency_id</code>.</p>
+<pre><code>const response = await fetch(
+  `${API_BASE}/elections/2026/constituencies/1/results`
+);
+const { data, meta } = await response.json();
+console.log(data.winner, data.winning_margin);
+console.log(meta.official_row_verification);</code></pre>
+<p><a href="/openapi.json">OpenAPI 3.1 specification ↗</a> · <a href="/api/v1/health">Health check ↗</a></p></section>
+<section class="notes"><h2>Know what you’re comparing</h2><p>These are general-election cycle results, not current officeholders or a full by-election history. Constituency numbers before 2011 must not be equated with modern boundaries. Party labels follow the source for each year. Candidate search returns records and does not establish that similarly named people are the same person.</p><p>Some source totals conflict. Those records retain their votes but omit computed percentages. Tamil search, district filters, local-body results, and parliamentary elections are planned additions.</p></section>
+</main><footer>Independent project · Not affiliated with ECI or the Tamil Nadu government.<a href="/api/v1/sources">Sources &amp; attribution</a></footer>
+</body></html>
