@@ -1,6 +1,7 @@
 const $ = id => document.getElementById(id);
 const apiBase = `${location.origin}/api/v1`;
 $('base-url').textContent = apiBase;
+let compareController, compareId = 0;
 let controller, requestId = 0, seats = [], yearsReady = false, retryAction;
 const option = (text, value) => { const o = document.createElement('option'); o.textContent = text; o.value = value; return o; };
 async function copyWithTimeout(text) {
@@ -14,12 +15,14 @@ async function copyWithTimeout(text) {
 }
 const format = value => Number.isFinite(value) ? value.toLocaleString('en-IN') : 'Under review';
 function start(message) {
+  compareController?.abort(); compareId++; $('compare-output').replaceChildren(); $('compare-status').textContent = ''; $('compare-button').disabled = true;
+  $('vote-chart').replaceChildren(); $('verification').hidden = true;
   controller?.abort(); controller = new AbortController();
   const task = { id: ++requestId, signal: controller.signal };
   $('status').textContent = message; $('status').className = '';
   $('retry').hidden = true; $('explorer').querySelector('button').disabled = true;
   $('results').replaceChildren(); $('summary').hidden = true;
-  for (const id of ['json-link', 'csv-link', 'seat-csv-link', 'copy-result']) $(id).hidden = true;
+  for (const id of ['json-link', 'csv-link', 'seat-csv-link', 'copy-result', 'read-link']) $(id).hidden = true;
   $('explore').setAttribute('aria-busy', 'true');
   return task;
 }
@@ -45,7 +48,7 @@ async function get(path, task) {
 function fillSeats() {
   const previous = $('constituency').value;
   const q = $('seat-search').value.trim().toLowerCase();
-  const matching = seats.filter(r => /^\d+$/.test(q) ? r.constituency_id === Number(q) : r.constituency_name.toLowerCase().includes(q));
+  const matching = seats.filter(r => (!$('district').value || (r.district_name ?? '__missing') === $('district').value) && (/^\d+$/.test(q) ? r.constituency_id === Number(q) : [r.constituency_name, ...(r.tamil_search_aliases ?? [])].some(name => name.toLowerCase().includes(q))));
   $('constituency').replaceChildren(...matching.map(r => option(`${r.constituency_id} · ${r.constituency_name}`, r.constituency_id)));
   if (matching.some(r => String(r.constituency_id) === previous)) $('constituency').value = previous;
   if (!matching.length) $('constituency').append(option('No matching constituency', ''));
@@ -54,12 +57,17 @@ function fillSeats() {
 }
 async function loadConstituencies() {
   const year = $('year').value, task = start('Loading constituencies…');
-  seats = []; $('constituency').disabled = true; $('seat-search').disabled = true; $('seat-search').value = '';
+  seats = []; $('district').disabled = true; $('constituency').disabled = true; $('seat-search').disabled = true; $('seat-search').value = '';
   $('constituency').replaceChildren(option('Loading constituencies…', ''));
   try {
     const { data } = await get(`/elections/${year}/constituencies?limit=500`, task);
     if (task.id !== requestId) return;
-    seats = data; fillSeats(); $('seat-search').disabled = false;
+    seats = data;
+    const districts = [...new Set(seats.map(r => r.district_name).filter(Boolean))].sort();
+    $('district').replaceChildren(option('All districts', ''), ...districts.map(name => option(name, name)));
+    if (districts.length && seats.some(r => !r.district_name)) $('district').append(option('District missing in source', '__missing'));
+    if (!districts.length) $('district').replaceChildren(option('District labels unavailable for this year', ''));
+    $('district').disabled = !districts.length; fillSeats(); $('seat-search').disabled = false;
     if (!seats.length) throw new Error('No constituencies are available for this year.');
     await showResults();
   } catch (error) { failed(error, task, loadConstituencies); }
@@ -79,6 +87,11 @@ async function showResults() {
     $('summary').replaceChildren(title, winner, detail);
     if (data.quality_flags.length) { const note = document.createElement('p'); note.textContent = `Source totals need review: ${data.quality_flags.join(', ')}. Computed percentages may be unavailable.`; $('summary').append(note); }
     $('summary').hidden = false;
+    TNResults.chart($('vote-chart'), data); TNResults.verification($('verification'), data); $('verification').hidden = false;
+    $('read-link').href = `/read/${year}/${seat}`;
+    const compareYears = [2026,2021,2016,2011].filter(y => y !== Number(year));
+    $('compare-year').replaceChildren(...compareYears.map(y => option(y,y)));
+    $('compare-year').disabled = Number(year) < 2011; $('compare-button').disabled = Number(year) < 2011;
     const rows = document.createDocumentFragment();
     for (const r of data.results) {
       const tr = document.createElement('tr'); if (r.status === 'won') tr.className = 'winner';
@@ -92,7 +105,7 @@ async function showResults() {
     $('json-link').textContent = 'Open this result as JSON ↗';
     $('csv-link').href = `${apiBase}/elections/${year}/export.csv`;
     $('seat-csv-link').href = `${apiBase}/elections/${year}/export.csv?constituency_id=${seat}`;
-    for (const id of ['json-link', 'csv-link', 'seat-csv-link', 'copy-result']) $(id).hidden = false;
+    for (const id of ['json-link', 'csv-link', 'seat-csv-link', 'copy-result', 'read-link']) $(id).hidden = false;
     finish(`Showing ${data.results.length} result rows for ${data.constituency_name}, ${year}.`);
   } catch (error) { failed(error, task, showResults); }
 }
@@ -126,3 +139,16 @@ $('copy-result').addEventListener('click', async () => {
   setTimeout(() => { $('copy-result').textContent = 'Copy result URL'; }, 2000);
 });
 init();
+
+$('district').addEventListener('change', () => { const count=fillSeats(); if(count) showResults(); else {start('No matching constituency.');finish('No matching constituency.');} });
+$('compare-year').addEventListener('change',()=>{compareController?.abort();compareId++;$('compare-output').replaceChildren();$('compare-status').textContent='';$('compare-button').disabled=Number($('year').value)<2011 || $('summary').hidden;});
+$('compare-form').addEventListener('submit', async e => {
+ e.preventDefault(); const from=$('compare-year').value,to=$('year').value,seat=$('constituency').value;
+ if(Number(to)<2011 || !seat || $('summary').hidden)return;
+ compareController?.abort();compareController=new AbortController();const id=++compareId;
+ $('compare-output').replaceChildren();$('compare-status').textContent='Loading comparison…';$('compare-button').disabled=true;
+ try {const response=await fetch(`${apiBase}/compare?from=${from}&to=${to}&constituency_id=${seat}`,{signal:AbortSignal.any([compareController.signal,AbortSignal.timeout(20000)])});const body=await response.json();if(id!==compareId)return;if(!response.ok)throw new Error(body.error?.message || 'Comparison failed');
+ for(const result of [body.data.from,body.data.to]) {const card=document.createElement('div');card.className='summary';const heading=document.createElement('h4');heading.textContent=result.year;const text=document.createElement('p');text.textContent=result.winner ? `${result.winner.candidate_name} · ${result.winner.party} · ${format(result.winner.votes)} votes` : 'Winner under review';const margin=document.createElement('p');margin.textContent=`Winning margin: ${format(result.winning_margin)} · Imported total: ${format(result.counted_vote_sum)}`;card.append(heading,text,margin);$('compare-output').append(card);}
+ $('compare-status').textContent=body.data.note;
+ }catch(error){if(id===compareId)$('compare-status').textContent=error.message;}finally{if(id===compareId)$('compare-button').disabled=false;}
+});

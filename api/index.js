@@ -8,6 +8,9 @@ const read = name => {
 };
 const coverage = read('coverage.json');
 const sources = read('sources.json');
+const seatMetadata = read('seat-metadata.json');
+const tamilNames = (year, id) => year >= 2011 ? seatMetadata.tamil_names[id] ?? [] : [];
+const seatInfo = (year, id) => ({ constituency_name_tamil: tamilNames(year, id)[0] ?? null, tamil_search_aliases: tamilNames(year, id), district_name: seatMetadata.districts[year]?.[id] ?? null, district_source_id: seatMetadata.district_sources[year] ?? null });
 const years = coverage.elections.map(e => e.year);
 // Read-only release data, reused within a warm process. No mutable user state.
 const datasets = Object.fromEntries(years.map(y => [y, read(`${y}.json.gz`)]));
@@ -57,7 +60,7 @@ function filter(rows, q) {
   const party = q.get('party');
   const status = q.get('status');
   if (status && !['won', 'lost', 'nota', 'unresolved'].includes(status)) fail(400, 'status must be won, lost, nota, or unresolved.');
-  if (search) rows = rows.filter(r => [r.candidate_name, r.constituency_name, r.party].some(v => low(v).includes(low(search))));
+  if (search) rows = rows.filter(r => [r.candidate_name, r.constituency_name, r.party, ...tamilNames(r.year, r.constituency_id)].some(v => low(v).includes(low(search))));
   if (party) rows = rows.filter(r => low(r.party) === low(party));
   if (status) rows = rows.filter(r => r.status === status);
   if (q.has('constituency_id')) {
@@ -72,7 +75,7 @@ function resultSummary(rows) {
   const runner = candidates.find(r => r.id !== winner?.id);
   const flags = [...new Set(rows.flatMap(r => r.quality_flags))];
   return { constituency_id: rows[0].constituency_id, constituency_name: rows[0].constituency_name, year: rows[0].year,
-    candidate_count: candidates.length, winner: winner ?? null, runner_up: runner ?? null,
+    ...seatInfo(rows[0].year, rows[0].constituency_id), candidate_count: candidates.length, winner: winner ?? null, runner_up: runner ?? null,
     winning_margin: winner && runner ? winner.votes - runner.votes : null,
     counted_vote_sum: rows.reduce((s,r) => s+r.votes,0), nota_votes: rows.filter(r => r.is_nota).reduce((s,r) => s+r.votes,0),
     quality_flags: flags, official_row_verification: 'pending' };
@@ -178,14 +181,23 @@ export function GET(request) {
       if (parts[2] === 'losers') selected = selected.filter(r => r.status === 'lost');
       return parts[2] === 'export.csv' ? csv(selected,y) : json(paging(selected,q));
     }
+    if (parts.length === 3 && parts[2] === 'districts') {
+      checkQuery(q, []);
+      if (!seatMetadata.districts[y]) fail(409, 'District labels are available only for 2021 and 2026.');
+      const seats = constituencies(rows);
+      const data = [...Map.groupBy(seats, r => r.district_name).entries()].map(([district_name, rr]) => ({ district_name, constituency_count: rr.length, constituency_ids: rr.map(r => r.constituency_id) })).sort((a,b) => (a.district_name ?? '').localeCompare(b.district_name ?? ''));
+      return json({ data, meta: { ...meta(), source_id: seatMetadata.district_sources[y], note: 'Source-year district labels; null means missing. Do not apply these labels to other years.' } });
+    }
     if (parts.length === 3 && parts[2] === 'parties') {
       checkQuery(q,[]);
       return json({ data:parties(rows), meta:meta() });
     }
     if (parts.length === 3 && parts[2] === 'constituencies') {
-      checkQuery(q,['q','page','limit']);
+      checkQuery(q,['q','district','page','limit']);
+      if (q.has('district') && !seatMetadata.districts[y]) fail(409,'District labels are available only for 2021 and 2026.');
       let selected = constituencies(rows);
-      if (q.get('q')) selected = selected.filter(r => low(r.constituency_name).includes(low(q.get('q'))));
+      if (q.has('district')) selected = selected.filter(r => low(r.district_name ?? '') === low(q.get('district')));
+      if (q.get('q')) selected = selected.filter(r => [r.constituency_name, ...r.tamil_search_aliases].some(name => low(name).includes(low(q.get('q')))));
       return json(paging(selected,q));
     }
     if (parts.length === 5 && parts[2] === 'constituencies' && parts[4] === 'results') {

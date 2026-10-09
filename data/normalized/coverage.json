@@ -486,7 +486,7 @@
     "Official ECI downloads returned HTTP 406/502 during collection; no complete official row audit was possible.",
     "2026 is a results-page archive, not a certified Form-20 dataset.",
     "Historical party labels and name spellings follow source copies; parties and people are not merged across years.",
-    "Tamil candidate/constituency names, district filters, turnout, affidavits, local-body and parliamentary elections are not part of this release.",
+    "District labels are source-year scoped and available only for 2021 and 2026; 19 labels are missing in the 2026 source. Tamil constituency search covers five Tirunelveli seats from 2011 onward. Tamil candidate names, turnout, affidavits, local-body and parliamentary elections are not part of this release.",
     "Zero-vote rows and inconsistent reported totals are retained and flagged.",
     "Secondary-copy agreement for 2021 and an official 2026 candidate-count check do not establish row-level official verification."
   ]

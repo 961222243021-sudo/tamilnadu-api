@@ -3,7 +3,7 @@
   "info": {
     "title": "Tamilnadu API",
     "version": "0.1.0",
-    "description": "Provisional Tamil Nadu Assembly general-election archive, 1967\u20132026. All 234 constituency IDs present each year; full official candidate verification pending. See coverage before relying on completeness. All routes are read-only, public, and domain-independent."
+    "description": "Provisional Tamil Nadu Assembly general-election archive, 1967–2026. All 234 constituency IDs present each year; full official candidate verification pending. See coverage before relying on completeness. All routes are read-only, public, and domain-independent."
   },
   "servers": [
     {
@@ -529,6 +529,14 @@
               "maximum": 500,
               "default": 50
             }
+          },
+          {
+            "name": "district",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Exact case-insensitive source district; 2021/2026 only"
           }
         ],
         "responses": {
@@ -1887,6 +1895,33 @@
           }
         },
         "description": "Supply year and constituency_id to get the full seat summary and every imported result row; no pagination."
+      }
+    },
+    "/elections/{year}/districts": {
+      "get": {
+        "summary": "Source-year district groups (2021 and 2026 only)",
+        "parameters": [
+          {
+            "name": "year",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "enum": [
+                2021,
+                2026
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "District names, seat IDs, counts; null marks missing labels"
+          },
+          "409": {
+            "description": "District data unavailable for this year"
+          }
+        }
       }
     }
   },

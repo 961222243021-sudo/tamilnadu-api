@@ -17,7 +17,7 @@ The green row is the winning candidate. Other candidates show LOST. NOTA means N
 
 Use **Copy result URL** to copy a ready-to-use request for your selected seat. Use **Open this result as JSON** to see the same data in a machine-readable format. Use **Download this seat CSV** for a spreadsheet of that constituency, or **Download year CSV** for the entire election. CSV files open in Excel, Google Sheets, or LibreOffice.
 
-If nothing loads, use **Try again**. If search finds no seat, clear it and choose from the list. Names are currently in English; Tamil search and district filters are not included.
+If nothing loads, use **Try again**. If search finds no seat, clear it and choose from the list. English name and number search cover all seats. Tamil search currently supports five Tirunelveli constituencies (IDs 224–228), from 2011 onward. Source district filters are available for 2021 and 2026; missing labels remain unavailable.
 
 ## 2. What is an API?
 
@@ -218,3 +218,15 @@ Vote shares are computed from imported candidate votes plus NOTA, not certified 
 Historical responses use cache headers, so this is not a live counting feed. No commercial uptime guarantee is offered in this release. Use the audit and official election reports when accuracy is critical.
 
 Created and built by **Shyam** · Independent project, not affiliated with ECI or the Tamil Nadu government. Project credit applies to original work; third-party data and artwork retain their respective rights.
+
+## New tools: readable pages, comparisons, and playground
+
+- Open [Tirunelveli’s readable result](https://tamilnadu-api.vercel.app/read/2026/224) to share a page with the winner, top-five vote chart, NOTA, every imported result row, and source-review details. Pattern: `/read/{year}/{constituency_id}`.
+- Use [the API playground](https://tamilnadu-api.vercel.app/playground) to build a request, see its JSON and HTTP status, and copy JavaScript or Python examples. Lists expose page and limit controls.
+- In the explorer, compare a selected seat against another election from 2011 onward. The comparison uses source-year party labels and does not establish current officeholders.
+- District list: `GET /api/v1/elections/2026/districts`. Each group includes `district_name`, `constituency_count`, and `constituency_ids`. A null name denotes missing source metadata (19 seats in 2026). 2021 and 2026 labels are from their respective archive files; other years return HTTP 409.
+- District filter: `GET /api/v1/elections/2026/constituencies?district=Tirunelveli&limit=500`. Matching is case insensitive and exact. URL-encode names with spaces.
+- Tamil search: `GET /api/v1/elections/2026/constituencies?q=திருநெல்வேலி`. The five reviewed modern seat names come from [Tirunelveli district’s Tamil election page](https://tirunelveli.nic.in/ta/தோ்தல்/). This is partial Tamil coverage; candidate names remain as imported.
+- Seat summaries add `constituency_name_tamil` (nullable), `tamil_search_aliases`, `district_name` (nullable), and `district_source_id` (nullable). Candidate row votes and existing endpoint paths are unchanged.
+
+Verification details identify imported records and flagged source inconsistencies. They do not certify the results as officially verified. Complete official candidate-row verification remains pending.

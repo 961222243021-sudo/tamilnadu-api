@@ -145,3 +145,15 @@ The project's code and third-party factual source snapshots are distinct. Source
 ## Creator
 
 Created and built by **Shyam**. © 2026 Shyam for original project code and documentation. Third-party election data and supplied artwork retain their respective rights and source attribution; this credit does not claim ownership of government records or political endorsement.
+
+## New tools: readable pages, comparisons, and playground
+
+- Open [Tirunelveli’s readable result](https://tamilnadu-api.vercel.app/read/2026/224) to share a page with the winner, top-five vote chart, NOTA, every imported result row, and source-review details. Pattern: `/read/{year}/{constituency_id}`.
+- Use [the API playground](https://tamilnadu-api.vercel.app/playground) to build a request, see its JSON and HTTP status, and copy JavaScript or Python examples. Lists expose page and limit controls.
+- In the explorer, compare a selected seat against another election from 2011 onward. The comparison uses source-year party labels and does not establish current officeholders.
+- District list: `GET /api/v1/elections/2026/districts`. Each group includes `district_name`, `constituency_count`, and `constituency_ids`. A null name denotes missing source metadata (19 seats in 2026). 2021 and 2026 labels are from their respective archive files; other years return HTTP 409.
+- District filter: `GET /api/v1/elections/2026/constituencies?district=Tirunelveli&limit=500`. Matching is case insensitive and exact. URL-encode names with spaces.
+- Tamil search: `GET /api/v1/elections/2026/constituencies?q=திருநெல்வேலி`. The five reviewed modern seat names come from [Tirunelveli district’s Tamil election page](https://tirunelveli.nic.in/ta/தோ்தல்/). This is partial Tamil coverage; candidate names remain as imported.
+- Seat summaries add `constituency_name_tamil` (nullable), `tamil_search_aliases`, `district_name` (nullable), and `district_source_id` (nullable). Candidate row votes and existing endpoint paths are unchanged.
+
+Verification details identify imported records and flagged source inconsistencies. They do not certify the results as officially verified. Complete official candidate-row verification remains pending.

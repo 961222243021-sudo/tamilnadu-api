@@ -111,3 +111,25 @@ test('beginner results shortcut matches complete seat results and rejects invali
   assert.equal(overview.guide,'/guide');
   assert(overview.examples.seat_results.endsWith('/results?year=2026&constituency_id=13'));
 });
+test('district groups retain every seat and missing source labels without guessing',async()=>{
+  for(const year of [2021,2026]) {
+    const {response,body}=await call(`/elections/${year}/districts`);
+    assert.equal(response.status,200);
+    assert.equal(body.data.reduce((sum,r)=>sum+r.constituency_count,0),234);
+    const ids=body.data.flatMap(r=>r.constituency_ids);assert.equal(new Set(ids).size,234);
+    const district=body.data.find(r=>r.district_name==='Tirunelveli');
+    if(district){const {body:b}=await call(`/elections/${year}/constituencies?district=Tirunelveli&limit=500`);assert.deepEqual(b.data.map(r=>r.constituency_id).sort((a,b)=>a-b),district.constituency_ids.sort((a,b)=>a-b));}
+  }
+  const {body}=await call('/elections/2026/districts');assert.equal(body.data.find(r=>r.district_name===null).constituency_count,19);
+  assert.equal((await call('/elections/2016/districts')).response.status,409);
+  assert.equal((await call('/elections/2016/constituencies?district=Chennai')).response.status,409);
+  assert.equal((await call('/elections/2026/districts?q=x')).response.status,400);
+});
+test('reviewed Tamil aliases apply only to modern IDs and preserve source verification',async()=>{
+  const {body}=await call('/elections/2026/constituencies?q='+encodeURIComponent('திருநெல்வேலி'));
+  assert.equal(body.pagination.total,1);assert.equal(body.data[0].constituency_id,224);
+  assert.equal(body.data[0].official_row_verification,'pending');
+  assert.equal((await call('/elections/2006/constituencies?q='+encodeURIComponent('திருநெல்வேலி'))).body.pagination.total,0);
+  const {body:b}=await call('/results?year=2021&constituency_id=224');assert.equal(b.data.constituency_name_tamil,'திருநெல்வேலி');assert.equal(b.data.district_source_id,'opencity-2021');
+  const {body:c}=await call('/candidates?year=2026&q='+encodeURIComponent('திருநெல்வேலி'));assert(c.data.every(r=>r.constituency_id===224));assert(c.pagination.total>1);
+});
