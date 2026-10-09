@@ -2,13 +2,20 @@
 
 Created and built by **Shyam**. You can use this project without signing up, paying, or obtaining an API key.
 
+## Quick start: choose what you need
+
+- **Just browse:** [Choose a year and constituency](https://tamilnadu-api.vercel.app/#explore).
+- **Get one seat as JSON:** [Simple results URL](https://tamilnadu-api.vercel.app/api/v1/results?year=2026&constituency_id=13). Change only the year and constituency number.
+- **Get every row for a year:** [Download 2026 CSV](https://tamilnadu-api.vercel.app/api/v1/elections/2026/export.csv).
+- **Build an app:** Copy a JavaScript or Python example in section 8. No API key is needed.
+
 ## 1. Start without writing code
 
 Open [the website](https://tamilnadu-api.vercel.app/#explore). Choose an election year. Type a constituency's English name or number in the search box, then choose it from the dropdown. Results appear automatically.
 
 The green row is the winning candidate. Other candidates show LOST. NOTA means None of the Above and is a separate voting option. The summary shows the winner, the winning margin, the number of candidates, and the sum of imported votes.
 
-Use **Open this result as JSON** to see the same data in a machine-readable format. Use **Download this seat CSV** for a spreadsheet of that constituency, or **Download year CSV** for the entire election. CSV files open in Excel, Google Sheets, or LibreOffice.
+Use **Copy result URL** to copy a ready-to-use request for your selected seat. Use **Open this result as JSON** to see the same data in a machine-readable format. Use **Download this seat CSV** for a spreadsheet of that constituency, or **Download year CSV** for the entire election. CSV files open in Excel, Google Sheets, or LibreOffice.
 
 If nothing loads, use **Try again**. If search finds no seat, clear it and choose from the list. Names are currently in English; Tamil search and district filters are not included.
 
@@ -70,6 +77,7 @@ All paths below start after `/api/v1`. Braces indicate values you replace, not c
 | Endpoint | What it returns | Query parameters |
 | --- | --- | --- |
 | `/` | API name, scope, docs links | None |
+| `/results?year={year}&constituency_id={id}` | Easy shortcut: full seat summary and every candidate/NOTA row | Required: `year`, `constituency_id`; no pagination |
 | `/health` | Runtime status and archive counts | None |
 | `/elections` | All available years and coverage | None |
 | `/elections/{year}` | One election's coverage and party totals | None |

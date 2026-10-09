@@ -8,6 +8,17 @@ A Vercel-ready, read-only API for Tamil Nadu Assembly election archives from **1
 
 **Release status: provisional.** Collected archives contain **36,039 result rows**, including **35,337 candidate rows** and **702 NOTA rows**, across 14 elections. Every election contains all 234 constituency IDs and one source-derived winner per constituency. **This does not certify that every candidate row is accurate or complete.** Official ECI report downloads returned HTTP 406/502 during collection, preventing a full official row audit.
 
+## Start in 30 seconds
+
+| What you want | Open this |
+| --- | --- |
+| Browse without coding | [Election explorer](https://tamilnadu-api.vercel.app/#explore) |
+| One constituency, all results | [Simple JSON request](https://tamilnadu-api.vercel.app/api/v1/results?year=2026&constituency_id=13) |
+| Download a whole election | [2026 CSV](https://tamilnadu-api.vercel.app/api/v1/elections/2026/export.csv) |
+| Learn from zero | [Complete guide](https://tamilnadu-api.vercel.app/guide) |
+
+The short URL `/api/v1/results?year=2026&constituency_id=13` returns the full seat summary and all imported candidate/NOTA rows. Change the year and ID. Use `Copy result URL` in the explorer to generate a request for the seat you selected.
+
 ## Use the live API
 
 Open [Tamilnadu API](https://tamilnadu-api.vercel.app/). Choose a year, search for a constituency by its English name or number, and select it. Results load automatically. Use the seat JSON/CSV links or download the entire election CSV.
@@ -61,6 +72,7 @@ All routes below are relative to `/api/v1` and accept GET, HEAD, and OPTIONS. PO
 | Path | Purpose |
 | --- | --- |
 | `/` | API overview |
+| `/results?year=2026&constituency_id=13` | Beginner shortcut for complete constituency results |
 | `/health` | Runtime health and release row counts |
 | `/coverage` | Complete audit, per-year counts, issues, and limitations |
 | `/sources` | Source URLs, dates, and raw-file SHA-256 checksums |

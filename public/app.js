@@ -10,7 +10,7 @@ function start(message) {
   $('status').textContent = message; $('status').className = '';
   $('retry').hidden = true; $('explorer').querySelector('button').disabled = true;
   $('results').replaceChildren(); $('summary').hidden = true;
-  for (const id of ['json-link', 'csv-link', 'seat-csv-link']) $(id).hidden = true;
+  for (const id of ['json-link', 'csv-link', 'seat-csv-link', 'copy-result']) $(id).hidden = true;
   $('explore').setAttribute('aria-busy', 'true');
   return task;
 }
@@ -79,11 +79,11 @@ async function showResults() {
       const td = document.createElement('td'), badge = document.createElement('span'); badge.className = `badge ${r.status}`; badge.textContent = r.status.toUpperCase(); td.append(badge); tr.append(td); rows.append(tr);
     }
     $('results').replaceChildren(rows);
-    $('json-link').href = apiBase + path;
+    $('json-link').href = `${apiBase}/results?year=${year}&constituency_id=${seat}`;
     $('csv-link').href = `${apiBase}/elections/${year}/export.csv`;
     $('seat-csv-link').href = `${apiBase}/elections/${year}/export.csv?constituency_id=${seat}`;
-    for (const id of ['json-link', 'csv-link', 'seat-csv-link']) $(id).hidden = false;
-    finish(`Showing ${data.results.length} result rows for ${data.constituency_name}, ${year}. Official row verification is pending.`);
+    for (const id of ['json-link', 'csv-link', 'seat-csv-link', 'copy-result']) $(id).hidden = false;
+    finish(`Showing ${data.results.length} result rows for ${data.constituency_name}, ${year}.`);
   } catch (error) { failed(error, task, showResults); }
 }
 async function init() {
@@ -109,5 +109,10 @@ $('copy-base').addEventListener('click', async () => {
   try { await navigator.clipboard.writeText(apiBase); $('copy-base').textContent = 'Copied!'; }
   catch { const selection = window.getSelection(); const range = document.createRange(); range.selectNodeContents($('base-url')); selection.removeAllRanges(); selection.addRange(range); $('copy-base').textContent = 'URL selected'; }
   setTimeout(() => { $('copy-base').textContent = 'Copy'; }, 2000);
+});
+$('copy-result').addEventListener('click', async () => {
+  try { await navigator.clipboard.writeText($('json-link').href); $('copy-result').textContent = 'Copied!'; }
+  catch { $('copy-result').textContent = 'Use the JSON link to copy'; }
+  setTimeout(() => { $('copy-result').textContent = 'Copy result URL'; }, 2000);
 });
 init();

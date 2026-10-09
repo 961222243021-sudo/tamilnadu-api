@@ -119,11 +119,24 @@ export function GET(request) {
     const parts = route.split('/').filter(Boolean);
     if (!parts.length) {
       checkQuery(q, []);
-      return json({ name:'Tamilnadu API', version:'v1', scope:coverage.scope, endpoints:['health','coverage','sources','elections','candidates','compare'], docs:'/docs', openapi:'/openapi.json', meta:meta() });
+      const base = `${url.origin}/api/v1`;
+      return json({ name:'Tamilnadu API', creator:'Shyam', version:'v1', scope:coverage.scope,
+        endpoints:['health','coverage','sources','elections','results','candidates','compare'], docs:'/docs', guide:'/guide', openapi:'/openapi.json',
+        examples:{ elections:`${base}/elections`, constituencies:`${base}/elections/2026/constituencies?limit=500`,
+          seat_results:`${base}/results?year=2026&constituency_id=13`, all_winners:`${base}/elections/2026/winners?limit=500`,
+          full_year_csv:`${base}/elections/2026/export.csv` }, meta:meta() });
     }
     if (parts.length === 1 && ['health','coverage','sources'].includes(parts[0])) {
       checkQuery(q, []);
       return json(parts[0] === 'health' ? { status:'ok', elections:years.length, result_rows:coverage.total_result_rows, meta:meta() } : { data:parts[0] === 'coverage' ? coverage : sources, meta:meta() });
+    }
+    if (parts[0] === 'results' && parts.length === 1) {
+      checkQuery(q, ['year','constituency_id']);
+      if (!q.has('year') || !q.has('constituency_id')) fail(400, 'Provide year and constituency_id. Example: /api/v1/results?year=2026&constituency_id=13');
+      const y = yearOf(q.get('year'));
+      const c = integer(q.get('constituency_id'), 'constituency_id', 1, 234);
+      const selected = datasets[y].filter(r => r.constituency_id === c);
+      return json({ data:{ ...resultSummary(selected), results:selected }, meta:meta() });
     }
     if (parts[0] === 'candidates' && parts.length === 1) {
       checkQuery(q, ['year','q','party','status','constituency_id','page','limit']);

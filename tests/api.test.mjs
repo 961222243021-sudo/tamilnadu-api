@@ -101,3 +101,13 @@ test('Vercel capture parameters do not break routing or weaken query validation'
   assert.equal(GET(new Request('https://example.vercel.app/api/v1/health?path=unrelated')).status,400);
   assert.equal(GET(new Request('https://example.vercel.app/api/index?route=health&path=health&district=Chennai')).status,400);
 });
+
+test('beginner results shortcut matches complete seat results and rejects invalid queries', async()=>{
+  const {response,body}=await call('/results?year=2026&constituency_id=13');
+  assert.equal(response.status,200);
+  assert.deepEqual(body,(await call('/elections/2026/constituencies/13/results')).body);
+  for(const path of ['/results','/results?year=2026','/results?year=2026&constituency_id=235','/results?year=2026&constituency_id=13&limit=50','/results?year=2026&year=2021&constituency_id=13'])assert.equal((await call(path)).response.status,400);
+  const {body:overview}=await call('/');
+  assert.equal(overview.guide,'/guide');
+  assert(overview.examples.seat_results.endsWith('/results?year=2026&constituency_id=13'));
+});

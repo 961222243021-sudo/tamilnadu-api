@@ -1781,6 +1781,113 @@
           }
         }
       }
+    },
+    "/results": {
+      "get": {
+        "summary": "Easy constituency results shortcut",
+        "operationId": "easy_constituency_results",
+        "parameters": [
+          {
+            "name": "year",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "enum": [
+                1967,
+                1971,
+                1977,
+                1980,
+                1984,
+                1989,
+                1991,
+                1996,
+                2001,
+                2006,
+                2011,
+                2016,
+                2021,
+                2026
+              ]
+            }
+          },
+          {
+            "name": "constituency_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 234
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Collected source data; official verification pending",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object"
+                    },
+                    "meta": {
+                      "$ref": "#/components/schemas/Meta"
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Unsafe boundary comparison",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "description": "Supply year and constituency_id to get the full seat summary and every imported result row; no pagination."
+      }
     }
   },
   "components": {
