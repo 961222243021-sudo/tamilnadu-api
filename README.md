@@ -1,6 +1,6 @@
 # Tamilnadu API
 
-<p align="left"><img src="public/assets/leaders.webp" alt="Political leaders collage supplied by Shyam" width="800"></p>
+<p align="left"><img src="public/assets/leaders.webp" alt="Updated political leaders collage supplied by Shyam" width="800"></p>
 
 **Created and built by Shyam.** · [Live website](https://tamilnadu-api.vercel.app/) · [Complete beginner guide](https://tamilnadu-api.vercel.app/guide) · [Guide on GitHub](API_GUIDE.md)
 
