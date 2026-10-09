@@ -11,6 +11,7 @@
   },
   "rewrites": [
     { "source": "/api/v1/:route*", "destination": "/api/index?route=:route*" },
-    { "source": "/docs", "destination": "/index.html" }
+    { "source": "/docs", "destination": "/index.html" },
+    { "source": "/guide", "destination": "/guide.html" }
   ]
 }

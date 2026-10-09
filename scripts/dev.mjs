@@ -12,10 +12,10 @@ const server = http.createServer(async (req,res) => {
       res.end(Buffer.from(await response.arrayBuffer()));
       return;
     }
-    const path = ['/', '/docs'].includes(url.pathname) ? 'index.html' : url.pathname.slice(1);
-    if (!['index.html','app.js','style.css','openapi.json','coverage.json'].includes(path)) { res.writeHead(404);res.end('Not found');return; }
+    const path = ['/', '/docs', '/docs/'].includes(url.pathname) ? 'index.html' : url.pathname === '/guide' ? 'guide.html' : url.pathname.slice(1);
+    if (!['index.html','app.js','style.css','openapi.json','coverage.json','guide.html','assets/leaders.webp','assets/leaders-small.webp'].includes(path)) { res.writeHead(404);res.end('Not found');return; }
     const bytes = await readFile(new URL(path,publicRoot));
-    const types = {html:'text/html',js:'application/javascript',css:'text/css',json:'application/json'};
+    const types = {html:'text/html',js:'application/javascript',css:'text/css',json:'application/json',webp:'image/webp'};
     res.writeHead(200,{'Content-Type':types[path.split('.').pop()]+'; charset=utf-8'});res.end(bytes);
   } catch { res.writeHead(500);res.end('Internal server error'); }
 });

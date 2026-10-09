@@ -36,7 +36,7 @@ async function get(path, task) {
 function fillSeats() {
   const previous = $('constituency').value;
   const q = $('seat-search').value.trim().toLowerCase();
-  const matching = seats.filter(r => `${r.constituency_id} ${r.constituency_name}`.toLowerCase().includes(q));
+  const matching = seats.filter(r => /^\d+$/.test(q) ? r.constituency_id === Number(q) : r.constituency_name.toLowerCase().includes(q));
   $('constituency').replaceChildren(...matching.map(r => option(`${r.constituency_id} · ${r.constituency_name}`, r.constituency_id)));
   if (matching.some(r => String(r.constituency_id) === previous)) $('constituency').value = previous;
   if (!matching.length) $('constituency').append(option('No matching constituency', ''));

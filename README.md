@@ -1,5 +1,9 @@
 # Tamilnadu API
 
+<p align="left"><img src="public/assets/leaders.webp" alt="Political leaders collage supplied by Shyam" width="800"></p>
+
+**Created and built by Shyam.** · [Live website](https://tamilnadu-api.vercel.app/) · [Complete beginner guide](https://tamilnadu-api.vercel.app/guide) · [Guide on GitHub](API_GUIDE.md)
+
 A Vercel-ready, read-only API for Tamil Nadu Assembly election archives from **1967 to 2026**. Includes a browser explorer, source references, coverage report, JSON endpoints, and CSV exports.
 
 **Release status: provisional.** Collected archives contain **36,039 result rows**, including **35,337 candidate rows** and **702 NOTA rows**, across 14 elections. Every election contains all 234 constituency IDs and one source-derived winner per constituency. **This does not certify that every candidate row is accurate or complete.** Official ECI report downloads returned HTTP 406/502 during collection, preventing a full official row audit.
@@ -125,3 +129,7 @@ The collector verifies existing snapshots and stops when a remote source changes
 Vercel bundles compressed read-only data files; requests do not call or scrape ECI. Historical results use public cache headers. There is no promised uptime or commercial SLA in this initial release. Public endpoints have no application-level rate limiter; add a persistent rate limiter and operational monitoring before offering paid access.
 
 The project's code and third-party factual source snapshots are distinct. Source attribution is retained; no government affiliation or blanket license over third-party material is claimed. Review source reuse terms before commercial redistribution.
+
+## Creator
+
+Created and built by **Shyam**. © 2026 Shyam for original project code and documentation. Third-party election data and supplied artwork retain their respective rights and source attribution; this credit does not claim ownership of government records or political endorsement.

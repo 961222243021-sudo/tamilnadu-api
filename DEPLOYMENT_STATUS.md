@@ -1,11 +1,13 @@
 # Deployment status
 
-Prepared on 2026-10-09. **Not deployed. No public API hostname has been assigned.**
+Live production website: https://tamilnadu-api.vercel.app/
 
-The connected Vercel account returned HTTP 403 when creating the `tamilnadu-api` project: “You don't have permission to create the project.” The environment has no Vercel CLI credentials available for a fallback.
+API base: https://tamilnadu-api.vercel.app/api/v1
 
-Create/import the project using an account with project-creation permission. Follow README.md. Suggested name: `tamilnadu-api`; framework Other; Node 24.x; build `npm run build`; output `public`; no environment variables. The final API base is the assigned origin followed by `/api/v1`.
+Connected repository: https://github.com/961222243021-sudo/tamilnadu-api (main).
 
-Validation completed locally: data build checks, 12 API tests, and HTTP checks for the documentation, static assets, OpenAPI specification, health endpoint, and first-seat results. The Vercel deployment itself is unverified. Browser visual checks could not run because the browser download was unavailable in this environment.
+Created and built by Shyam. Vercel automatically builds pushes to main. Configuration: Other, Node.js 24, build `npm run build`, output `public`; no environment variables.
 
-Before marketing complete official coverage, resolve the data-verification gate in API_PLAN.md and DATA_AUDIT.md. The current API clearly marks every row as provisional.
+The live routing issue was fixed and verified on 2026-10-09. API tests, data build validation, browser exploration, and HTTP checks passed. Full usage instructions are in API_GUIDE.md and /guide.
+
+The archive remains provisional; full official ECI row verification is pending. See DATA_AUDIT.md for source issues and API_PLAN.md for the verification gate.
