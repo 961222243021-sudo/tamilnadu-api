@@ -89,3 +89,15 @@ test('CORS preflight, HEAD, read-only enforcement, and coverage',async()=>{
   assert.equal(POST().status,405);
   const {body}=await call('/coverage');assert.equal(body.data.all_officially_verified,false);
 });
+
+test('Vercel capture parameters do not break routing or weaken query validation', async () => {
+  for (const path of ['health','elections','elections/2026/constituencies','elections/2026/constituencies/1/results']) {
+    const query = path.endsWith('constituencies') ? '&limit=500' : '';
+    const response = GET(new Request(`https://example.vercel.app/api/index?route=${path}&path=${path}${query}`));
+    assert.equal(response.status,200);
+    const direct = GET(new Request(`https://example.vercel.app/api/v1/${path}?route=${path}${query}`));
+    assert.deepEqual(await response.json(),await direct.json());
+  }
+  assert.equal(GET(new Request('https://example.vercel.app/api/v1/health?path=unrelated')).status,400);
+  assert.equal(GET(new Request('https://example.vercel.app/api/index?route=health&path=health&district=Chennai')).status,400);
+});

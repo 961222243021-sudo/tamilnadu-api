@@ -4,6 +4,20 @@ A Vercel-ready, read-only API for Tamil Nadu Assembly election archives from **1
 
 **Release status: provisional.** Collected archives contain **36,039 result rows**, including **35,337 candidate rows** and **702 NOTA rows**, across 14 elections. Every election contains all 234 constituency IDs and one source-derived winner per constituency. **This does not certify that every candidate row is accurate or complete.** Official ECI report downloads returned HTTP 406/502 during collection, preventing a full official row audit.
 
+## Use the live API
+
+Open [Tamilnadu API](https://tamilnadu-api.vercel.app/). Choose a year, search for a constituency by its English name or number, and select it. Results load automatically. Use the seat JSON/CSV links or download the entire election CSV.
+
+Base URL: `https://tamilnadu-api.vercel.app/api/v1`. No signup or API key is needed.
+
+- List years: `/elections`
+- All 234 constituency summaries: `/elections/2026/constituencies?limit=500`
+- All candidate and NOTA rows for seat 1: `/elections/2026/constituencies/1/results`
+- All winners: `/elections/2026/winners?limit=500`
+- Full year download: `/elections/2026/export.csv`
+
+Replace `2026` with a supported election year and `1` with the constituency ID from that year's list. `data` holds results, `meta` describes verification, and list responses include `pagination`. Lists default to 50 rows, with a maximum of 500 per page. To retrieve all results, request every page through `pagination.pages` or use CSV. Individual voters' choices are secret; this API contains candidate vote totals.
+
 ## Run locally
 
 Use Node.js 24. There are no runtime npm dependencies, database credentials, or API keys.
@@ -64,7 +78,7 @@ Outside the API base: `/docs` is the explorer, `/openapi.json` is OpenAPI 3.1, a
 List endpoints use `page=1&limit=50`; maximum `limit=500`. Result lists and candidate search accept `q` (substring), `party` (exact case-insensitive source label), `status=won|lost|nota|unresolved`, and `constituency_id`. Candidate search additionally accepts `year`. Constituency lists support `q`, `page`, and `limit`. CSV exports support the result filters without pagination. Unknown, repeated, and invalid query parameters are rejected.
 
 ```js
-const API_BASE = 'https://YOUR-ASSIGNED-DOMAIN/api/v1';
+const API_BASE = 'https://tamilnadu-api.vercel.app/api/v1';
 const response = await fetch(`${API_BASE}/elections/2026/constituencies/1/results`);
 if (!response.ok) throw new Error(`API returned ${response.status}`);
 const { data, meta } = await response.json();

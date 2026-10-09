@@ -111,6 +111,10 @@ export function GET(request) {
   try {
     const url = new URL(request.url);
     const q = url.searchParams;
+    // Earlier deployments used :path*. Vercel forwards that captured parameter
+    // alongside route; discard it only when it matches the actual routed path.
+    const publicRoute = url.pathname.startsWith('/api/v1/') ? url.pathname.slice(8) : null;
+    if (q.getAll('path').length === 1 && q.get('path') === (publicRoute ?? q.get('route'))) q.delete('path');
     const route = url.pathname.startsWith('/api/v1') ? url.pathname.slice('/api/v1'.length) : '/' + (q.get('route') ?? '');
     const parts = route.split('/').filter(Boolean);
     if (!parts.length) {
